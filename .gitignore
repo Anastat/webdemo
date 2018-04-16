@@ -1,0 +1,11 @@
+# Gradle files
+.gradle/
+
+#Gradle build files (also jetty-runner)
+build/
+
+#Webapp runner (Tomcat) build files
+target/
+
+#Log files
+logs/
