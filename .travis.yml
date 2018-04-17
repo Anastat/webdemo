@@ -8,3 +8,8 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 before_install: chmod +x gradlew
+#Skip install step
+install: true
+#Run only integration tests defined by the Gradle task
+script: 
+ - ./gradlew integTest

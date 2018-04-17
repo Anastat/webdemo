@@ -13,6 +13,19 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+sourceSets {
+	integTest {
+		java.srcDir file('src/integTest/java')
+		resources.srcDir ('src/integTest/resources')
+	}
+}
+
+task integTest(type: Test) {
+	testClassesDirs = sourceSets.integTest.output.classesDirs
+    classpath = sourceSets.integTest.runtimeClasspath
+    mustRunAfter(test) 
+}
+
 //Include the jetty runner into the build/server folder
 task copyToLib(type: Copy) {
     into "$buildDir/server"				//Default $buildDir is build/
@@ -23,7 +36,12 @@ task copyToLib(type: Copy) {
         }
     }
 }
-
+dependencies {
+	integTestCompile configurations.testCompile
+    integTestRuntime configurations.testRuntime
+	integTestCompile sourceSets.main.output
+    integTestCompile sourceSets.test.output
+}
 //Add to task stage that Heroku to prepare deployment
 task stage {
     dependsOn clean, war, copyToLib 
